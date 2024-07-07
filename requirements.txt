@@ -5,4 +5,5 @@ Werkzeug
 Flask-WTF
 WTForms
 email_validator
+email-validate
 
