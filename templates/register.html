@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Registration</title>
+    <style>
+      /* login.css */
+
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: linear-gradient(45deg, #1d2b64, #f8cdda);
+        overflow: hidden;
+        font-family: 'Arial', sans-serif;
+      }
+    
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 40px;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 350px;
+      animation: fadeIn 1s ease-in-out;
+    }
+    
+    h2 {
+      color: #ffffff;
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-control-label {
+      display: block;
+      color: #ffffff;
+      margin-bottom: 5px;
+      font-size: 1.2em;
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #ffffff;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.3);
+      color: #ffffff;
+      font-size: 1em;
+      transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+      border-color: #f8cdda;
+      background: rgba(255, 255, 255, 0.5);
+    }
+    
+    .btn {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1.2em;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    
+    .btn-primary {
+      background: #1d2b64;
+      color: #ffffff;
+    }
+    
+    .btn-primary:hover {
+      background: #f8cdda;
+      color: #1d2b64;
+    }
+    
+    .btn-secondary {
+      background: #f8cdda;
+      color: #1d2b64;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 10px;
+    }
+    
+    .btn-secondary:hover {
+      background: #1d2b64;
+      color: #f8cdda;
+    }
+    
+    .error {
+      color: #ff4c4c;
+      font-size: 0.9em;
+    }
+    
+    p {
+      color: #ffffff;
+    }
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Background animation */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('https://i.ibb.co/Mp3LHXw/derek-thomson-Nq-JYQ3m-r-VA-unsplash.jpg') no-repeat center center/cover;
+      z-index: -1;
+      opacity: 0.6;
+      animation: backgroundChange 10s infinite alternate;
+    }
+
+    @keyframes backgroundChange {
+      0% {
+        filter: hue-rotate(0deg);
+      }
+      100% {
+        filter: hue-rotate(360deg);
+      }
+    }
+    </style>
+    
+  </head>
+  <body>
+    <div class="container">
+      <h2>User Registration</h2>
+      <form method="POST" action="{{ url_for('register') }}">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+          {{ form.username.label(class="form-control-label") }} {{
+          form.username(class="form-control form-control-lg") }} {% for error in
+          form.username.errors %}
+          <span class="error">{{ error }}</span>
+          {% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.email.label(class="form-control-label") }} {{
+          form.email(class="form-control form-control-lg") }} {% for error in
+          form.email.errors %}
+          <span class="error">{{ error }}</span>
+          {% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.password.label(class="form-control-label") }} {{
+          form.password(class="form-control form-control-lg") }} {% for error in
+          form.password.errors %}
+          <span class="error">{{ error }}</span>
+          {% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.confirm_password.label(class="form-control-label") }} {{
+          form.confirm_password(class="form-control form-control-lg") }} {% for
+          error in form.confirm_password.errors %}
+          <span class="error">{{ error }}</span>
+          {% endfor %}
+        </div>
+        <button type="submit" class="btn btn-primary">Register</button>
+      </form>
+      <p>
+        Already have an account?
+        <a href="{{ url_for('login') }}" class="btn btn-secondary">Login</a>
+      </p>
+    </div>
+  </body>
+</html>

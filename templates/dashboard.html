@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        .gem-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            text-align: center;
+        }
+        .gem-logo {
+            font-size: 48px;
+            color: #ffd700;
+        }
+        .gem-info {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .gem-container:hover .gem-info {
+            display: block;
+        }
+        .week-days {
+            display: none;
+            margin-top: 10px;
+        }
+        .week-days span {
+            display: inline-block;
+            padding: 5px 10px;
+            margin: 2px;
+            border-radius: 5px;
+            background-color: #e9ecef;
+        }
+        .week-days .active {
+            background-color: #28a745;
+            color: #ffffff;
+        }
+        .list-group-item .week-days.active {
+            display: block;
+        }
+    </style>
+    <script>
+        function toggleWeekDays(streakId) {
+            var element = document.getElementById("week-days-" + streakId);
+            if (element) {
+                element.classList.toggle("active");
+            }
+        }
+
+        async function deleteStreak(streakId) {
+            const response = await fetch(`/delete_streak/${streakId}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+            });
+            if (response.ok) {
+                document.getElementById(`streak-${streakId}`).remove();
+            } else {
+                alert("Failed to delete streak");
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Your Streaks</h1>
+        <a href="/add_streak" class="btn btn-primary mb-3">Add New Streak</a>
+        <div class="list-group">
+            {% for streak in streaks %}
+            <div class="list-group-item" id="streak-{{ streak.id }}">
+                <span onclick="toggleWeekDays({{ streak.id }})">
+                    <i class="fas fa-fire"></i> {{ streak.streak_type }} - {{ streak.count }}
+                </span>
+                <a href="/increment_streak/{{ streak.id }}" class="btn btn-success"><i class="fas fa-plus"></i> Increment</a>
+                <button class="btn btn-danger" onclick="deleteStreak({{ streak.id }})"><i class="fas fa-trash-alt"></i> Delete</button>
+                <div id="week-days-{{ streak.id }}" class="week-days">
+                    {% set days_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] %}
+                    {% set active_days = streak.active_days.split(',') if streak.active_days else [] %}
+                    {% for day in days_of_week %}
+                    <span class="{{ 'active' if day in active_days else '' }}">{{ day }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="gem-container">
+        <i class="fas fa-gem gem-logo"></i>
+        <div class="gem-info">
+            <h3>Gems</h3>
+            <p>You have earned: {{ gems }} gems!</p>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMN3Q4QyzsGNpHN8PBkj7pf9XFgFhNYzjZjUpuNCzRBpf/3L6c5Y4Pj5K3uXD5xp" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4Ag0n2O9kV+goxWAi5j6F1sj5xK1G1K8e6VqJyST64mP2cZr+Ksu" crossorigin="anonymous"></script>
+</body>
+</html>

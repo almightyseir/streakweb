@@ -1,0 +1,56 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+}
+
+.container {
+  margin-top: 50px;
+}
+
+.list-group-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.list-group-item .btn {
+  margin-left: 10px;
+}
+
+.week-days span {
+  margin-right: 5px;
+}
+
+.week-days .active {
+  background-color: #28a745;
+  color: white;
+}
+
+.gem-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  text-align: center;
+}
+
+.gem-logo {
+  font-size: 48px;
+  color: #ffd700;
+}
+
+.gem-info {
+  display: none;
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.gem-container:hover .gem-info {
+  display: block;
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Streak</title>
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background-color: #e7e7e7;
+        color: #343a40;
+      }
+      .container {
+        margin-top: 50px;
+      }
+      .card {
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      }
+      .card-header {
+        background-color: #ffffff;
+        border-bottom: none;
+        text-align: center;
+      }
+      .card-body {
+        background-color: #ffffff;
+      }
+      .btn-primary {
+        background-color: #343a40;
+        border: none;
+      }
+      .btn-primary:hover {
+        background-color: #495057;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
+        <div class="card-header">
+          <h2>Add Streak</h2>
+        </div>
+        <div class="card-body">
+          <form method="POST" action="{{ url_for('add_streak') }}">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+              <label for="streakType">Streak Type</label>
+              {{ form.streak_type(class_="form-control", id="streakType",
+              placeholder="e.g. Language, Learning, Workouts") }}
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">
+              Add Streak
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
